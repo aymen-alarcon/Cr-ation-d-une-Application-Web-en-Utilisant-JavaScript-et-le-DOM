@@ -4,3 +4,7 @@
   opacity: 0.6;
   text-decoration: none;
 }
+
+.btn-outline-primary{
+    background-color: white;
+}
