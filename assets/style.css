@@ -17,3 +17,16 @@ header{
 main{
   background-color: #F2F2F2;
 }
+
+.progress-bar{
+  position: relative;
+}
+
+.border-bottom{
+  border-bottom: 3px solid #dee2e6 !important;
+}
+
+.border-bottom-2{
+  border-bottom: 3px solid #0067cd !important;
+  position: absolute;
+}
