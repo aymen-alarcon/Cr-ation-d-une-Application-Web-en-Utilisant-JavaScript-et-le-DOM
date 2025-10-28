@@ -3,15 +3,16 @@ let answer1 = document.getElementById("answer1");
 let answer2 = document.getElementById("answer2");
 let label1 = document.querySelector("label[for='answer1']");
 let label2 = document.querySelector("label[for='answer2']");
-let pastpage = document.getElementById("pastpage");
 let questionElement = document.querySelector(".question");
 let progressBar = document.querySelector(".border-bottom-2");
+
 let questions = [
-    "What is the capital of France?",
-    "What is 2 + 2?",
-    "What is the largest planet in our solar system?",
-    "Who wrote 'Romeo and Juliet'?"
+    "#1 What is the capital of France?",
+    "#2 What is 2 + 2?",
+    "#3 What is the largest planet in our solar system?",
+    "#4 Who wrote 'Romeo and Juliet'?"
 ];
+
 let answers = [
     ["Paris", "London"],
     ["4", "22"],
@@ -19,134 +20,44 @@ let answers = [
     ["William Shakespeare", "Charles Dickens"]
 ];
 
+let correctAnswerIndexes = [0, 0, 0, 0];
+let userAnswers = [];
 let currentQuestionIndex = 0;
 
-function navigatePages() {
-    if (window.location.href.includes("index.html")) {
-        currentQuestionIndex = 0;
-        if (currentQuestionIndex < questions.length) {
-            questionElement.textContent = questions[currentQuestionIndex];
-            label1.textContent = answers[currentQuestionIndex][0];
-            label2.textContent = answers[currentQuestionIndex][1];
-            currentQuestionIndex++;
+function showQuestion() {
+    questionElement.textContent = questions[currentQuestionIndex];
+    label1.textContent = answers[currentQuestionIndex][0];
+    label2.textContent = answers[currentQuestionIndex][1];
+    progressBar.style.width = ((currentQuestionIndex) / questions.length) * 100 + "%";
+}
+
+function checkAnswer() {
+    if (!answer1.checked && !answer2.checked) {
+        alert("Please select an answer.");
+        return;
+    }
+
+    let selectedIndex = answer1.checked ? 0 : 1;
+    userAnswers[currentQuestionIndex] = selectedIndex;
+
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        answer1.checked = false;
+        answer2.checked = false;
+        showQuestion();
+    } else {
+        progressBar.style.width = "100%";
+
+        let resultString = "";
+        for (let i = 0; i < questions.length; i++) {
+            resultString += (userAnswers[i] === correctAnswerIndexes[i]) ? "1" : "0";
         }
-        progressBar.style.width = "0%";
-        pastpage.classList.add("disabled");
-        setTimeout(function() {
-            let value = localStorage.getItem('myValue');
-            value = "0";
-            localStorage.setItem('myValue', value);
-            window.location.href = "second.html?answer=" + value; 
-        }, 30000);
-        btn.addEventListener("click", checkAnswers);
-        function checkAnswers() {
-            if (answer1.checked) {
-                let value  = "1";
-                localStorage.setItem('myValue', value);
-                window.location.href = "second.html?answer=" + value; 
-            } else if (answer2.checked) {
-                let value = "0";
-                localStorage.setItem('myValue', value);
-                window.location.href = "second.html?answer=" + value; 
-            } else {
-                alert("Please select an answer.");
-            }
-        }
-    }else if (window.location.href.includes("second.html")) {
-            currentQuestionIndex = 1;
-            if (currentQuestionIndex < questions.length) {
-                questionElement.textContent = questions[currentQuestionIndex];
-                label1.textContent = answers[currentQuestionIndex][0];
-                label2.textContent = answers[currentQuestionIndex][1];
-                currentQuestionIndex++;
-            }
-            progressBar.style.width = "25%";
-            pastpage.href = "index.html";
-            setTimeout(function() {
-                let value = localStorage.getItem('myValue');
-                value = value + "0";
-                localStorage.setItem('myValue', value);
-                window.location.href = "third.html?answer=" + value; 
-            }, 30000);
-            btn.addEventListener("click", checkAnswers);
-            function checkAnswers() {
-                if (answer1.checked) {
-                    let value = localStorage.getItem('myValue');
-                    value = value + "1";
-                    localStorage.setItem('myValue', value);
-                    window.location.href = "third.html?answer=" + value; 
-                } else if (answer2.checked) {
-                    let value = localStorage.getItem('myValue');
-                    value = value + "0";
-                    localStorage.setItem('myValue', value);
-                    window.location.href = "third.html?answer=" + value; 
-                } else {
-                    alert("Please select an answer.");
-                }
-        }
-    } else if (window.location.href.includes("third.html")) {
-            currentQuestionIndex = 2;
-            if (currentQuestionIndex < questions.length) {
-                questionElement.textContent = questions[currentQuestionIndex];
-                label1.textContent = answers[currentQuestionIndex][0];
-                label2.textContent = answers[currentQuestionIndex][1];
-                currentQuestionIndex++;
-            }
-            progressBar.style.width = "50%";
-            pastpage.href = "second.html";
-            setTimeout(function() {
-                let value = localStorage.getItem('myValue');
-                value = value + "0";
-                localStorage.setItem('myValue', value);
-                window.location.href = "forth.html?answer=" + value; 
-            }, 30000);        
-            btn.addEventListener("click", checkAnswers);
-            function checkAnswers() {
-                if (answer1.checked) {
-                    let value = localStorage.getItem('myValue');
-                    value = value + "1";
-                    localStorage.setItem('myValue', value);
-                    window.location.href = "forth.html?answer=" + value; 
-                } else if (answer2.checked) {
-                    let value = localStorage.getItem('myValue');
-                    value = value + "0";
-                    localStorage.setItem('myValue', value);
-                    window.location.href = "forth.html?answer=" + value; 
-            } else {
-                alert("Please select an answer.");
-            }
-        }
-    } else if (window.location.href.includes("forth.html")) {
-        currentQuestionIndex = 3;
-        if (currentQuestionIndex < questions.length) {
-            questionElement.textContent = questions[currentQuestionIndex];
-            label1.textContent = answers[currentQuestionIndex][0];
-            label2.textContent = answers[currentQuestionIndex][1];
-            currentQuestionIndex++;
-        }
-        progressBar.style.width = "75%";
-        pastpage.href = "third.html";
-        setTimeout(function() {
-            let value = localStorage.getItem('myValue');
-            value = value + "0";
-            localStorage.setItem('myValue', value);
-            window.location.href = "resultat.html?answer=" + value; 
-        }, 30000);        btn.addEventListener("click", checkAnswers);
-        function checkAnswers() {
-            if (answer1.checked) {
-                let value = localStorage.getItem('myValue');
-                value = value + "1";
-                localStorage.setItem('myValue', value);
-                window.location.href = "resultat.html?answer=" + value; 
-            } else if (answer2.checked) {
-                let value = localStorage.getItem('myValue');
-                value = value + "0";
-                localStorage.setItem('myValue', value);
-                window.location.href = "resultat.html?answer=" + value; 
-            } else {
-                alert("Please select an answer.");
-            }
-        }
+
+        localStorage.setItem("myValue", resultString);
+
+        window.location.href = "resultat.html";
     }
 }
-window.onload = navigatePages;
+
+btn.addEventListener("click", checkAnswer);
+window.onload = showQuestion;
