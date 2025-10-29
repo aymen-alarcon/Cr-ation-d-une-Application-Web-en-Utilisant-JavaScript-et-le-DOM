@@ -30,3 +30,7 @@ main{
   border-bottom: 3px solid #0067cd !important;
   position: absolute;
 }
+
+#Quiz-entry{
+  padding: 22rem !important;
+}
