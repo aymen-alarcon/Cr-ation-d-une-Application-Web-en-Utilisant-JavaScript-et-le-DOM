@@ -10,10 +10,10 @@ questionContainer.appendChild(questionElement);
 questionElement.classList.add("question");
 
 let progressBarContainer = document.createElement("div");
-progressBarContainer.classList.add("progress-bar");
 let borderBottom1 = document.createElement("div");
-borderBottom1.classList.add("border-bottom");
 let borderBottom2 = document.createElement("div");
+progressBarContainer.classList.add("progress-bar");
+borderBottom1.classList.add("border-bottom");
 borderBottom2.classList.add("border-bottom-2");
 progressBarContainer.appendChild(borderBottom1);
 progressBarContainer.appendChild(borderBottom2);
@@ -78,7 +78,7 @@ function checkAnswer() {
     } else {
         selectedIndex = 1;
     }
-    
+
     userAnswers[currentQuestionIndex] = selectedIndex;
 
     currentQuestionIndex++;
@@ -93,7 +93,7 @@ function checkAnswer() {
         for (let i = 0; i < questions.length; i++) {
             resultString += (userAnswers[i] === correctAnswerIndexes[i]) ? "1" : "0";
         }
-
+    
         localStorage.setItem("myValue", resultString);
 
         window.location.href = "resultat.html";
