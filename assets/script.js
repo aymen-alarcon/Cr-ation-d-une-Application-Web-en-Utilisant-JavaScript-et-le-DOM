@@ -90,10 +90,14 @@ function checkAnswer() {
         progressBar.style.width = "100%";
 
         let resultString = "";
-        for (let i = 0; i < questions.length; i++) {
-            resultString += (userAnswers[i] === correctAnswerIndexes[i]) ? "1" : "0";
-        }
-    
+        questions.forEach((_, i)=> {         
+            if (userAnswers[i] === correctAnswerIndexes[i]) {
+                 resultString += "1";
+            } else {
+                 resultString += "0";
+            }   
+        });
+
         localStorage.setItem("myValue", resultString);
 
         window.location.href = "resultat.html";
@@ -102,3 +106,4 @@ function checkAnswer() {
 
 btn.addEventListener("click", checkAnswer);
 window.onload = showQuestion;
+
